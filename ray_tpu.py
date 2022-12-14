@@ -4,7 +4,6 @@ import subprocess
 import time
 
 import glob
-import requests
 from fabric import Connection
 
 
@@ -35,7 +34,6 @@ def create_tpu(
 
         if status["state"] not in ["CREATING", "READY"]:
             print("deleting TPU")
-            delete_tpu(name, zone)
 
             while True:
                 try:
@@ -49,7 +47,6 @@ def create_tpu(
         pass
 
     params = (
-        ('node_id', name),
     )
 
     data = {"accelerator_type":
@@ -107,8 +104,6 @@ def wait_til(name, zone, state):
             if k not in ret:
                 matches = False
                 continue
-            if ret[k] != expected_v:
-                matches = False
 
         if "error" in ret:
             return False
